@@ -10,14 +10,43 @@ app.use(express.static('public'));
 
 // include and initialize the rollbar library with your access token
 var Rollbar = require('rollbar')
+//const { toNamespacedPath } = require('path')
 var rollbar = new Rollbar({
   accessToken: 'a0beefff38ac48bfa0385164f6f359ae',
   captureUncaught: true,
   captureUnhandledRejections: true,
 })
 
+let botNames = ['Genie', 'Eezee', 'Alien Ship', 'Spectra']
 // record a generic message and send it to Rollbar
 rollbar.log('Hello world!')
+
+app.get('/', function(req, res) {
+    res.send('Request')
+    if(!botNames.includes('Tetra')){
+        rollbar.warning('GET: Tetra is not in array')
+    }
+})
+
+app.post('/post', function(req,res) {
+    res.send('Request')
+    if(!botNames.includes('Tetra')){
+        rollbar.critical('POST: You cannot make changes')
+    }
+})
+
+app.put('/put', function(req,res) {
+    res.send('Request')
+    if(!botNames.includes('Tetra')){
+        Rollbar.error('PUT: Bot name cannot be updated')
+    }
+})
+
+app.delete('/delete', function(req,res) {
+    res.send('Delete Request')
+        Rollbar.error('DELETE: Bots cannot be deleted ')
+    
+})
 
 app.get("/styles", (req, res) => {
     res.sendFile(path.join(__dirname, "public/index.css"));
@@ -86,11 +115,6 @@ app.get('/api/player', (req, res) => {
         console.log('ERROR GETTING PLAYER STATS', error)
         res.sendStatus(400)
     }
-})
-
-app.get('/', function(req, res) {
-    rollbar.info('fetch the information')
-    res.send('Welcome to the duel duo game')
 })
 
 
