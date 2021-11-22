@@ -29,7 +29,7 @@ app.get("/styles", (req, res) => {
 
 app.get('/api/robots', (req, res) => {
     try {
-        res.status(200).send(botsArr)
+        res.status(200).send(bots)
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
         res.sendStatus(400)
