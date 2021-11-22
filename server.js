@@ -88,12 +88,12 @@ app.get('/api/player', (req, res) => {
     }
 })
 
-app.get('/api/robots', (req, res) => {
-        res.send('Request')
-   
-       rollbar.error('There is no such function called botsArr')
-       
-    })
+app.get('/', function(req, res) {
+    rollbar.info('fetch the information')
+    res.send('Welcome to the duel duo game')
+})
+
+
 
 const port = process.env.PORT || 3000
 
